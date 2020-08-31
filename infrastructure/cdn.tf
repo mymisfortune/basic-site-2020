@@ -76,6 +76,12 @@ resource "aws_cloudfront_distribution" "site" {
   # Requests should be coming from Europe or North America
   price_class = "PriceClass_100"
 
+  restrictions {
+    geo_restriction {
+      restriction_type = "whitelist"
+      locations        = ["US", "CA", "GB", "IE"]
+    }
+  }
 
   tags = {
     Environment = "prod"
