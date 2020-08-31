@@ -34,9 +34,9 @@ resource "aws_s3_bucket_object" "doc" {
   server_side_encryption = "AES256"
 
   # Upload the default doc if it doesn't exist, then ignore any further changes so it can be updated elsewhere.
-  # lifecycle {
-  #   ignore_changes = [source]
-  # }
+  lifecycle {
+    ignore_changes = [source]
+  }
 }
 
 resource "aws_s3_bucket_object" "image" {
@@ -46,5 +46,4 @@ resource "aws_s3_bucket_object" "image" {
   content_type           = "text/html; charset=utf-8"
   etag                   = filemd5("./content/img/hello_world.jpg")
   server_side_encryption = "AES256"
-
 }
