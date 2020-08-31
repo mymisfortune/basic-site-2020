@@ -15,9 +15,6 @@ resource "aws_acm_certificate_validation" "site" {
   certificate_arn = aws_acm_certificate.site.arn
 }
 
-output "cdn_fqdn" {
-  value = aws_cloudfront_distribution.site.domain_name
-}
 
 resource "aws_cloudfront_distribution" "site" {
   origin {
@@ -38,7 +35,7 @@ resource "aws_cloudfront_distribution" "site" {
   #   prefix          = "myprefix"
   # }
 
-  aliases = ["basic-site-2020-prod.mymisfortune.com"]
+  # aliases = ["basic-site-2020-prod.mymisfortune.com"]
 
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
@@ -97,11 +94,10 @@ resource "aws_cloudfront_distribution" "site" {
   }
 
   viewer_certificate {
-    acm_certificate_arn            = aws_acm_certificate.site.arn
-    cloudfront_default_certificate = false
-    minimum_protocol_version       = "TLSv1.2_2019"
-    ssl_support_method             = "sni-only"
+    cloudfront_default_certificate = true
   }
+}
 
-  # depends_on = ["aws_acm_certificate_validation.site"]
+output "cdn_fqdn" {
+  value = aws_cloudfront_distribution.site.domain_name
 }
