@@ -35,7 +35,7 @@ resource "aws_s3_bucket_object" "doc" {
 
   # Upload the default doc if it doesn't exist, then ignore any further changes so it can be updated elsewhere.
   lifecycle {
-    ignore_changes = [source]
+    ignore_changes = [source, etag]
   }
 }
 
