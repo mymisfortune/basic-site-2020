@@ -6,6 +6,15 @@ resource "aws_cloudfront_origin_access_identity" "site" {
   comment = "Cloudfront identity for the site"
 }
 
+resource "aws_acm_certificate" "site" {
+  domain_name       = "basic-site-2020-prod.mymisfortune.com"
+  validation_method = "EMAIL"
+}
+
+resource "aws_acm_certificate_validation" "site" {
+  certificate_arn = aws_acm_certificate.site.arn
+}
+
 output "cdn_fqdn" {
   value = aws_cloudfront_distribution.site.domain_name
 }
@@ -88,6 +97,11 @@ resource "aws_cloudfront_distribution" "site" {
   }
 
   viewer_certificate {
-    cloudfront_default_certificate = true
+    acm_certificate_arn            = aws_acm_certificate.site.arn
+    cloudfront_default_certificate = false
+    minimum_protocol_version       = "TLSv1.2_2019"
+    ssl_support_method             = "sni-only"
   }
+
+  # depends_on = ["aws_acm_certificate_validation.site"]
 }
