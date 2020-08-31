@@ -30,7 +30,7 @@ resource "aws_s3_bucket_object" "doc" {
   key                    = "index.html"
   source                 = "./content/index.html"
   content_type           = "text/html; charset=utf-8"
-  etag                   = filemd5("./content/default_index.html")
+  etag                   = filemd5("./content/index.html")
   server_side_encryption = "AES256"
 
   # Upload the default doc if it doesn't exist, then ignore any further changes so it can be updated elsewhere.
@@ -44,7 +44,7 @@ resource "aws_s3_bucket_object" "image" {
   key                    = "img/hello_world.jpg"
   source                 = "./content/img/hello_world.jpg"
   content_type           = "text/html; charset=utf-8"
-  etag                   = filemd5("./content/hello_world.jpg")
+  etag                   = filemd5("./content/img/hello_world.jpg")
   server_side_encryption = "AES256"
 
 }
