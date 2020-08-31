@@ -1,0 +1,11 @@
+version: "3.8"
+services:
+  terraform:
+    image: hashicorp/terraform:0.13.1
+    volumes:
+      - ./infrastructure:/terraform
+    working_dir: /terraform
+    command: /bin/true
+    entrypoint:
+      - /bin/sh
+      - -c
