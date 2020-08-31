@@ -25,16 +25,26 @@ resource "aws_s3_bucket_policy" "static_content" {
   policy = data.aws_iam_policy_document.static_content_access.json
 }
 
-resource "aws_s3_bucket_object" "default_doc" {
+resource "aws_s3_bucket_object" "doc" {
   bucket                 = aws_s3_bucket.static_content.bucket
   key                    = "index.html"
-  source                 = "./content/default_index.html"
+  source                 = "./content/index.html"
   content_type           = "text/html; charset=utf-8"
   etag                   = filemd5("./content/default_index.html")
   server_side_encryption = "AES256"
 
   # Upload the default doc if it doesn't exist, then ignore any further changes so it can be updated elsewhere.
-  lifecycle {
-    ignore_changes = [source]
-  }
+  # lifecycle {
+  #   ignore_changes = [source]
+  # }
+}
+
+resource "aws_s3_bucket_object" "image" {
+  bucket                 = aws_s3_bucket.static_content.bucket
+  key                    = "img/hello_world.jpg"
+  source                 = "./content/img/hello_world.jpg"
+  content_type           = "text/html; charset=utf-8"
+  etag                   = filemd5("./content/hello_world.jpg")
+  server_side_encryption = "AES256"
+
 }
