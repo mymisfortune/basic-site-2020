@@ -6,16 +6,6 @@ resource "aws_cloudfront_origin_access_identity" "site" {
   comment = "Cloudfront identity for the site"
 }
 
-resource "aws_acm_certificate" "site" {
-  domain_name       = "basic-site-2020-prod.mymisfortune.com"
-  validation_method = "EMAIL"
-}
-
-resource "aws_acm_certificate_validation" "site" {
-  certificate_arn = aws_acm_certificate.site.arn
-}
-
-
 resource "aws_cloudfront_distribution" "site" {
   origin {
     domain_name = aws_s3_bucket.static_content.bucket_regional_domain_name
