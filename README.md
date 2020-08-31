@@ -80,4 +80,17 @@ https://console.aws.amazon.com/iam/home to lock down the rest of the account.
     AWS_SECRET_ACCESS_KEY | <terraform.cloud aws_secret_access_key> | True
     AWS_DEFAULT_REGION | <Your local AWS zone, in my case: eu-west-1> | False
 
-1. Queue a plan, check it and apply if all good.
+1. Queue a plan, check it and if it looks ok then apply.
+
+## Deploy changes
+
+Once you're at the point where you have your `hello world` site running, then you can either keep all of the content
+centralised within this repository, or split out deployment of updates to one or more repositories. If splitting this
+out, you will need a pipeline to update the contents of S3 bucket.
+
+## Additional config
+
+Other config options available:
+
+* To make the site easier to use, you can put a friendly name on the domain through a series of delegated DNS to Route53
+and creating a cert in AWS ACM with DNS validation.
