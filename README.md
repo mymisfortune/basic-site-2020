@@ -80,4 +80,35 @@ https://console.aws.amazon.com/iam/home to lock down the rest of the account.
     AWS_SECRET_ACCESS_KEY | <terraform.cloud aws_secret_access_key> | True
     AWS_DEFAULT_REGION | <Your local AWS zone, in my case: eu-west-1> | False
 
-1. Queue a plan, check it and apply if all good.
+1. Queue a plan, check it and if it looks ok then apply.
+
+## Deploy changes
+
+If you are going to author your content in this repository, then you will need to the remove the `ignore_changes` block
+of the static content object.
+Deploying changes is then as easy as making changes to the default branch in this
+repository via whichever git process you prefer.
+
+## Additional config
+
+### Scaling
+
+Cloudfront and S3 should suffice for scaling of users, if you need to scale geographically then you will need to add to
+the whitelist provided, switch it to a blacklist, or disable and allow all access - you may want to also change the CDN
+class to match.
+
+If you need to scale content, so that a single team is no longer able to manage this, then you should consider splitting
+paths out into one or more repositories.
+To make things easier, each repository should concern itself with a single path, e.g. <https://yoursite.com/products> or
+<https://yoursite.com/services> could have a repository each.
+You could then look at dynamically generating the root `index.html` via a lambda function or similar.
+
+### Friendly DNS
+
+To make the site easier to use, you can put a friendly name on the domain through a series of delegated DNS to Route53
+and creating a cert in AWS ACM with DNS validation.
+
+### Safer changes
+
+To make changes safer, you can create an additional TFC workspace for testing changes in, this can be based off a
+different git branch than the default branch provided, or using variables and versioned modules within Terraform.
