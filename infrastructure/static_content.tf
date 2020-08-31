@@ -29,6 +29,7 @@ resource "aws_s3_bucket_object" "default_doc" {
   bucket                 = aws_s3_bucket.static_content.bucket
   key                    = "index.html"
   source                 = "./content/default_index.html"
+  content_type           = "text/html; charset=utf-8"
   etag                   = filemd5("./content/default_index.html")
   server_side_encryption = "AES256"
 
